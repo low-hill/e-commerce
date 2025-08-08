@@ -1,0 +1,24 @@
+# Gradle
+.gradle/
+build/
+
+# IntelliJ
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# Mac
+.DS_Store
+
+# Log files
+*.log
+
+# Temporary files
+*~
+*.tmp
+
+# Local build artifacts
+hs_err_pid*
+replay_pid*

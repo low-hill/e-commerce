@@ -52,3 +52,7 @@ tasks.named('compileJava').configure {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+bootBuildImage {
+    imageName = "my-ecommerce-app:latest"
+}
