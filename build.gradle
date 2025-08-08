@@ -1,0 +1,54 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.5.4'
+    id 'io.spring.dependency-management' version '1.1.7'
+    id 'org.openapi.generator' version '7.13.0'
+}
+
+group = 'org.example'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.openapitools:jackson-databind-nullable:0.2.6'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+openApiGenerate {
+    generatorName = "spring"
+    inputSpec = "$projectDir/src/main/resources/api/openapi.yaml".toString()
+    outputDir = layout.buildDirectory.dir("generated-sources/openapi").get().asFile.path
+    apiPackage = 'org.example.ecommerce.api'
+    modelPackage = 'org.example.ecommerce.model'
+    configOptions = [
+            useSpringBoot3: "true",
+            library: "spring-boot",
+            serializableModel: "true",
+            delegatePattern: "true",
+            useBeanValidation: "true",
+//            openApiNullable: "true",
+            useTags: "true",
+            interfaceOnly: "true"
+    ]
+}
+
+sourceSets.main.java.srcDirs layout.buildDirectory.dir("generated-sources/openapi/src/main/java")
+
+tasks.named('compileJava').configure {
+    dependsOn tasks.named('openApiGenerate')
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
