@@ -5,7 +5,7 @@ info:
     'This is a ***sample ecommerce app API***.'
   license:
     name: MIT
-    url: https://github.com/[YOUR_USERNAME]/[YOUR_REPOSITORY]/blob/main/LICENSE
+    url: https://github.com/low-hill/e-commerce/blob/main/LICENSE
   version: 1.0.0
 externalDocs:
   description: Any document link you want to generate along with API.
