@@ -8,6 +8,7 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import org.hibernate.annotations.GenericGenerator;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.OneToMany;
@@ -34,7 +35,8 @@ import static jakarta.persistence.FetchType.LAZY;
 @ToString(exclude = {"addresses", "cards", "cart", "orders"})
 public class UserEntity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(generator = "uuid-v7")
+    @GenericGenerator(name = "uuid-v7", type = org.example.ecommerce.config.UuidV7Generator.class)
     @Column(name = "ID", updatable = false, nullable = false)
     private UUID id;
 
@@ -71,14 +73,11 @@ public class UserEntity {
     private List<AddressEntity> addresses = Collections.emptyList();
 
     @OneToMany(mappedBy = "user", fetch = LAZY, orphanRemoval = true)
-    @ToString.Exclude
     private List<CardEntity> cards;
 
     @OneToOne(mappedBy = "user", fetch = LAZY, orphanRemoval = true)
-    @ToString.Exclude
     private CartEntity cart;
 
     @OneToMany(mappedBy = "userEntity", fetch = LAZY, orphanRemoval = true)
-    @ToString.Exclude
     private List<OrderEntity> orders;
 }

@@ -1,53 +1,57 @@
 package org.example.ecommerce.entity;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
+import org.hibernate.annotations.GenericGenerator;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.hibernate.annotations.GenericGenerator;
 
 
 @Entity
-@Table(name = "card")
+@Table(name = "cart")
 @Getter
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@ToString(exclude = {"user", "orders"})
-public class CardEntity {
+@ToString(exclude = {"user", "items"})
+@EqualsAndHashCode(exclude = {"user", "items"})
+public class CartEntity {
+
     @Id
     @GeneratedValue(generator = "uuid-v7")
     @GenericGenerator(name = "uuid-v7", type = org.example.ecommerce.config.UuidV7Generator.class)
     @Column(name = "ID", updatable = false, nullable = false)
     private UUID id;
 
-    @Column(name = "NUMBER")
-    private String number;
-
-    @Column(name = "EXPIRES")
-    private String expires;
-
-    @Column(name = "CVV")
-    private String cvv;
-
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "USER_ID", referencedColumnName = "ID")
     private UserEntity user;
 
-    @OneToMany(mappedBy = "cardEntity", fetch = FetchType.LAZY, orphanRemoval = true)
-    private List<OrderEntity> orders;
+    @ManyToMany(
+            cascade = CascadeType.ALL
+    )
+    @JoinTable(
+            name = "CART_ITEM",
+            joinColumns = @JoinColumn(name = "CART_ID"),
+            inverseJoinColumns = @JoinColumn(name = "ITEM_ID")
+    )
+    @Builder.Default
+    private List<ItemEntity> items = Collections.emptyList();
 }

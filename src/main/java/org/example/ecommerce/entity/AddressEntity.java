@@ -6,6 +6,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
+import org.hibernate.annotations.GenericGenerator;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -17,7 +18,8 @@ import lombok.Getter;
 @Getter
 public class AddressEntity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(generator = "uuid-v7")
+    @GenericGenerator(name = "uuid-v7", type = org.example.ecommerce.config.UuidV7Generator.class)
     @Column(name = "ID", updatable = false, nullable = false)
     private UUID id;
 
