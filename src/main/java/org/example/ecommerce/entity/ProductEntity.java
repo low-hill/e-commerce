@@ -8,8 +8,6 @@ import jakarta.persistence.Basic;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import org.hibernate.annotations.GenericGenerator;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
@@ -22,6 +20,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.example.ecommerce.config.generator.GeneratedUuidV7;
 
 
 @Entity
@@ -33,8 +32,7 @@ import lombok.NoArgsConstructor;
 public class ProductEntity {
 
     @Id
-    @GeneratedValue(generator = "uuid-v7")
-    @GenericGenerator(name = "uuid-v7", type = org.example.ecommerce.config.UuidV7Generator.class)
+    @GeneratedUuidV7
     @Column(name = "ID", updatable = false, nullable = false)
     private UUID id;
 

@@ -23,10 +23,12 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'io.swagger.core.v3:swagger-annotations:2.2.22'
     implementation 'org.openapitools:jackson-databind-nullable:0.2.6'
+    implementation 'org.springframework.boot:spring-boot-starter-hateoas'
     implementation 'org.flywaydb:flyway-core'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'com.fasterxml.uuid:java-uuid-generator:5.1.0'
-    implementation 'org.projectlombok:lombok'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
     runtimeOnly 'com.h2database:h2'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
@@ -42,10 +44,11 @@ openApiGenerate {
             useSpringBoot3: "true",
             library: "spring-boot",
             serializableModel: "true",
-            delegatePattern: "true",
+//            delegatePattern: "true",
             useBeanValidation: "true",
             useTags: "true",
-            interfaceOnly: "true"
+            interfaceOnly: "true",
+            hateoas: "true"
     ]
 }
 

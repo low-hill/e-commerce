@@ -3,13 +3,11 @@ spring:
     name: e-commerce
   datasource:
     name: ecomm
-    url: jdbc:h2:mem:ecomm
+    url: jdbc:h2:mem:ecomm;DATABASE_TO_UPPER=FALSE
     driverClassName: org.h2.Driver
     username: sa
     password:
-    DB_CLOSE_DELAY: 1
-    IGNORECASE: TRUE
-    DATABASE_TO_UPPER: false
+    DB_CLOSE_DELAY: -1
   h2:
     console:
       enabled: true
@@ -21,13 +19,11 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        default_schema: ecomm
   flyway:
     enabled: true
     baseline-on-migrate: true
     locations: classpath:db/migration
-    url: jdbc:h2:mem:ecomm
-    user: sa
-    password:
 
 
 #    springdoc:
