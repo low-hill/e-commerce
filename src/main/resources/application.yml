@@ -15,7 +15,7 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: none
-    show-sql: true
+    show-sql: false
     properties:
       hibernate:
         format_sql: true
@@ -24,6 +24,30 @@ spring:
     enabled: true
     baseline-on-migrate: true
     locations: classpath:db/migration
+
+datasource-proxy:
+  enabled: true
+  logging: slf4j
+  multiline: true
+  query:
+    enable-logging: true
+    multiline: true     # TRACE, DEBUG, INFO
+    log-level: DEBUG
+#    logger-name: datasource-proxy-query   # 원하는 로거명 지정
+  slow-query:
+    enable-logging: true
+    threshold: 500   # ms 기준 (500ms 초과시 slow query 로깅)
+    log-level: WARN
+    logger-name: datasource-proxy-slow
+
+#logging:
+#  level:
+#    datasource-proxy-query: DEBUG
+#    datasource-proxy-slow: WARN
+
+logging:
+  level:
+    net.ttddyy.dsproxy.listener.logging.SLF4JQueryLoggingListener: DEBUG
 
 
 #    springdoc:

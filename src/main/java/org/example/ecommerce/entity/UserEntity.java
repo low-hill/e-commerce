@@ -8,11 +8,9 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
-import org.hibernate.annotations.GenericGenerator;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
@@ -22,12 +20,13 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.GenericGenerator;
 
 import static jakarta.persistence.FetchType.LAZY;
 
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 @Getter
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -75,8 +74,8 @@ public class UserEntity {
     @OneToMany(mappedBy = "user", fetch = LAZY, orphanRemoval = true)
     private List<CardEntity> cards;
 
-    @OneToOne(mappedBy = "user", fetch = LAZY, orphanRemoval = true)
-    private CartEntity cart;
+//    @OneToOne(mappedBy = "user", fetch = LAZY, orphanRemoval = true)
+//    private CartEntity cart;
 
     @OneToMany(mappedBy = "userEntity", fetch = LAZY, orphanRemoval = true)
     private List<OrderEntity> orders;

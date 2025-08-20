@@ -6,13 +6,10 @@ import java.util.UUID;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import org.hibernate.annotations.GenericGenerator;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 import lombok.AccessLevel;
@@ -22,6 +19,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.example.ecommerce.config.generator.GeneratedUuidV7;
 
 
 @Entity
@@ -35,14 +33,16 @@ import lombok.ToString;
 public class CartEntity {
 
     @Id
-    @GeneratedValue(generator = "uuid-v7")
-    @GenericGenerator(name = "uuid-v7", type = org.example.ecommerce.config.UuidV7Generator.class)
+    @GeneratedUuidV7
     @Column(name = "ID", updatable = false, nullable = false)
     private UUID id;
 
-    @OneToOne
-    @JoinColumn(name = "USER_ID", referencedColumnName = "ID")
-    private UserEntity user;
+    @Column(name = "USER_ID", insertable = false, updatable = false)
+    private UUID userId;
+
+//    @OneToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "USER_ID", referencedColumnName = "ID")
+//    private UserEntity user;
 
     @ManyToMany(
             cascade = CascadeType.ALL
