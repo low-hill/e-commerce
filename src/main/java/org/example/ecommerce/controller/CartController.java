@@ -23,6 +23,11 @@ public class CartController implements CartApi {
     }
 
     @Override
+    public ResponseEntity<List<Item>> addOrReplaceItemsByCustomerId(String customerId, Item item) {
+        return ok(cartService.addOrReplaceItemsByCustomerId(customerId, item));
+    }
+
+    @Override
     public ResponseEntity<List<Item>> getCartItemsByCustomerId(String customerId){
         return ok(cartService.getCartItemsByCustomerId(customerId));
     }
