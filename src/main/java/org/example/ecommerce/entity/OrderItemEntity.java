@@ -1,65 +1,46 @@
 package org.example.ecommerce.entity;
 
-
-import java.util.Objects;
-import java.util.UUID;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
-import org.hibernate.annotations.GenericGenerator;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-
+import java.math.BigDecimal;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
+import lombok.Setter;
 
 @Entity
 @Table(name = "order_item")
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class OrderItemEntity {
 
     @Id
-    @GeneratedValue(generator = "uuid-v7")
-    @GenericGenerator(name = "uuid-v7", type = org.example.ecommerce.config.UuidV7Generator.class)
-    @Column(name = "ID", updatable = false, nullable = false)
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
 
-    @Column(name = "order_id")
-    private UUID orderId;
+    @ManyToOne
+    @JoinColumn(name = "order_id", nullable = false)
+    private OrderEntity orderEntity;
 
-    @Column(name = "item_id")
-    private UUID itemId;
+    @ManyToOne
+    @JoinColumn(name = "product_id", nullable = false)
+    private ProductEntity productEntity;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        OrderItemEntity that = (OrderItemEntity) o;
-        return Objects.equals(id, that.id) && Objects.equals(orderId, that.orderId)
-                && Objects.equals(itemId, that.itemId);
-    }
+    @Column(name = "quantity", nullable = false)
+    private int quantity;
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, orderId, itemId);
-    }
-
-    @Override
-    public String toString() {
-        return "OrderItemEntity{" +
-                "id=" + id +
-                ", orderId=" + orderId +
-                ", itemId=" + itemId +
-                '}';
-    }
+    @Column(name = "unit_price", nullable = false)
+    private BigDecimal unitPrice;
 }

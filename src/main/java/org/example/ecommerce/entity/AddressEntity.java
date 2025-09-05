@@ -5,21 +5,19 @@ import java.util.UUID;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import org.hibernate.annotations.GenericGenerator;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 import lombok.Getter;
+import org.example.ecommerce.config.generator.GeneratedUuidV7;
 
 @Entity
 @Table(name = "address")
 @Getter
 public class AddressEntity {
     @Id
-    @GeneratedValue(generator = "uuid-v7")
-    @GenericGenerator(name = "uuid-v7", type = org.example.ecommerce.config.UuidV7Generator.class)
+    @GeneratedUuidV7
     @Column(name = "ID", updatable = false, nullable = false)
     private UUID id;
 

@@ -52,30 +52,16 @@ erDiagram
     User ||--o{ Card : "has"
     User ||--|| Cart : "owns"
     Order }o--|| Card : "paid_with"
-
-    %% --- Product and Itemization ---
-    Product {
-        UUID id PK
-        string name
-        numeric price
-        int count
-    }
-    Item {
-        UUID id PK
-        int quantity
-        numeric unit_price
-        UUID product_id FK
-    }
-    Tag {
-        UUID id PK
-        string name
-    }
-    Product }o--o{ Tag : "has"
-    Product ||--o{ Item : "is_base_for"
     Cart }o--o{ Item : "contains"
-    Order }o--o{ Item : "includes"
+
 
     %% --- Auxiliary Order-related Entities ---
+    OrderItem {
+      UUID id PK
+      int quantity
+      numeric unit_price
+      UUID product_id FK
+    }
     Payment {
         UUID id PK
         boolean authorized
@@ -95,7 +81,29 @@ erDiagram
     Order ||--|| Payment : "has"
     Order ||--|| Shipment : "has"
     Order ||--|| Authorization : "has"
+    Order ||--o{ OrderItem: "includes"
 
+    %% --- Product and Itemization ---
+    Product {
+      UUID id PK
+      string name
+      numeric price
+      int count
+    }
+    Item {
+      UUID id PK
+      int quantity
+      numeric unit_price
+      UUID product_id FK
+    }
+    Tag {
+      UUID id PK
+      string name
+    }
+    
+    Product ||--o{ Item : "is_base_for"
+    Product }o--o{ Tag : "has"
+    Product ||--o{ OrderItem : "is_base_for"
 ```
 
 ## Future Improvements

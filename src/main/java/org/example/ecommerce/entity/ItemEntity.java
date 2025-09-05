@@ -29,8 +29,8 @@ import org.example.ecommerce.config.generator.GeneratedUuidV7;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@ToString(exclude = {"product", "cart", "orders"})
-@EqualsAndHashCode(exclude = {"product", "cart", "orders"})
+@ToString(exclude = {"product", "cart"})
+@EqualsAndHashCode(exclude = {"product", "cart"})
 public class ItemEntity {
     @Id
     @GeneratedUuidV7
@@ -50,6 +50,5 @@ public class ItemEntity {
     @ManyToMany(mappedBy = "items", fetch = FetchType.LAZY)
     private List<CartEntity> cart;
 
-    @ManyToMany(mappedBy = "items", fetch = FetchType.LAZY)
-    private List<OrderEntity> orders;
+    
 }
