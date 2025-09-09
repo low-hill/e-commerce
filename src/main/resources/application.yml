@@ -35,7 +35,7 @@ datasource-proxy:
     log-level: DEBUG
 #    logger-name: datasource-proxy-query   # 원하는 로거명 지정
   slow-query:
-    enable-logging: true
+#    enable-logging: true
     threshold: 500   # ms 기준 (500ms 초과시 slow query 로깅)
     log-level: WARN
     logger-name: datasource-proxy-slow
