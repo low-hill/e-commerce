@@ -2,8 +2,7 @@ package org.example.ecommerce.entity;
 
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
-import java.time.Instant;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -44,8 +43,8 @@ import org.example.ecommerce.model.Order.StatusEnum;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@ToString(exclude = {"userEntity", "addressEntity", "paymentEntity", "shipment", "cardEntity", "orderItems", "authorizationEntity"})
-@EqualsAndHashCode(exclude = {"userEntity", "addressEntity", "paymentEntity", "shipment", "cardEntity", "orderItems", "authorizationEntity"})
+@ToString(exclude = {"userEntity", "addressEntity", "paymentEntity", "shipment", "cardEntity", "items", "authorizationEntity"})
+@EqualsAndHashCode(exclude = {"userEntity", "addressEntity", "paymentEntity", "shipment", "cardEntity", "items", "authorizationEntity"})
 public class OrderEntity {
     @Id
     @GeneratedUuidV7
@@ -80,11 +79,11 @@ public class OrderEntity {
     private CardEntity cardEntity;
 
     @Column(name = "ORDER_DATE")
-    private Timestamp orderDate;
+    private OffsetDateTime orderDate;
 
     @OneToMany(mappedBy = "orderEntity", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
-    private List<OrderItemEntity> orderItems = new ArrayList<>();
+    private List<OrderItemEntity> items = new ArrayList<>();
 
     @OneToOne(mappedBy = "orderEntity")
     private AuthorizationEntity authorizationEntity;
@@ -93,7 +92,7 @@ public class OrderEntity {
         OrderEntity orderEntity = OrderEntity.builder()
             .userEntity(user)
             .addressEntity(address)
-            .orderDate(Timestamp.from(Instant.now()))
+            .orderDate(OffsetDateTime.now())
             .status(StatusEnum.CREATED)
             .build();
 
@@ -118,7 +117,7 @@ public class OrderEntity {
             .map(item -> item.getUnitPrice().multiply(BigDecimal.valueOf(item.getQuantity())))
             .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        orderEntity.setOrderItems(orderItems);
+        orderEntity.setItems(orderItems);
         orderEntity.setTotalAmount(total);
         return orderEntity;
     }

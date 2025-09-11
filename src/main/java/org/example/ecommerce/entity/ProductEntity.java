@@ -64,4 +64,11 @@ public class ProductEntity {
 
     @OneToMany(mappedBy = "product")
     private List<ItemEntity> items;
+
+    public void deductStock(int quantity) {
+        if (this.count < quantity) {
+            throw new IllegalStateException("Insufficient stock for product " + this.name);
+        }
+        this.count -= quantity;
+    }
 }

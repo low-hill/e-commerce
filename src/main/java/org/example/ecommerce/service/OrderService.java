@@ -14,12 +14,10 @@ import org.example.ecommerce.entity.ProductEntity;
 import org.example.ecommerce.entity.UserEntity;
 import org.example.ecommerce.exception.ResourceNotFoundException;
 import org.example.ecommerce.model.NewOrder;
-import org.example.ecommerce.model.Order;
 import org.example.ecommerce.repository.AddressRepository;
 import org.example.ecommerce.repository.OrderRepository;
 import org.example.ecommerce.repository.ProductRepository;
 import org.example.ecommerce.repository.UserRepository;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,7 +31,7 @@ public class OrderService {
     private final ProductRepository productRepository;
 
     @Transactional
-    public Optional<Order> addOrder(NewOrder newOrder) {
+    public Optional<OrderEntity> addOrder(NewOrder newOrder) {
         // 1. Fetch parent entities
         UserEntity user = userRepository.findById(UUID.fromString(newOrder.getCustomerId()))
             .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + newOrder.getCustomerId()));
@@ -51,28 +49,23 @@ public class OrderService {
         OrderEntity orderEntity = OrderEntity.create(user, address, newOrder.getItems(), productMap);
 
         // 4. Deduct stock
-        orderEntity.getOrderItems().forEach(orderItem -> {
+        orderEntity.getItems().forEach(orderItem -> {
             ProductEntity product = orderItem.getProductEntity();
             product.deductStock(orderItem.getQuantity());
         });
 
         // 5. Save order
-        orderRepository.save(orderEntity);
-
-        return Optional.of(toModel(orderEntity));
+        OrderEntity savedEntity = orderRepository.save(orderEntity);
+        return Optional.ofNullable(savedEntity);
     }
 
-    public Iterable<Order> getOrdersByCustomerId(String customerId) {
-        return orderRepository.findByCustomerId(UUID.fromString(customerId)).stream().map(this::toModel).collect(Collectors.toList());
+    public Optional<List<OrderEntity>> getOrdersByCustomerId(String customerId) {
+        return orderRepository.findByCustomerId(UUID.fromString(customerId));
     }
 
-    public Optional<Order> getByOrderId(String id) {
-        return orderRepository.findById(UUID.fromString(id)).map(this::toModel);
+    public Optional<OrderEntity> getByOrderId(String id) {
+        return orderRepository.findById(UUID.fromString(id));
     }
 
-    private Order toModel(OrderEntity entity) {
-        Order order = new Order();
-        BeanUtils.copyProperties(entity, order);
-        return order;
-    }
+    
 }
