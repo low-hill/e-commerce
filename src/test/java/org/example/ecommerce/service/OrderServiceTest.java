@@ -14,6 +14,7 @@ import org.example.ecommerce.repository.AddressRepository;
 import org.example.ecommerce.repository.OrderRepository;
 import org.example.ecommerce.repository.ProductRepository;
 import org.example.ecommerce.repository.UserRepository;
+import org.example.ecommerce.testdata.AddressTestData;
 import org.example.ecommerce.testdata.OrderTestData;
 import org.example.ecommerce.testdata.ProductTestData;
 import org.example.ecommerce.testdata.UserTestData;
@@ -59,10 +60,9 @@ class OrderServiceTest {
     @BeforeEach
     void setUp() {
         testUser = UserTestData.createUserEntity();
-        testAddress = UserTestData.createAddresses(testUser);
-
+        testAddress = AddressTestData.createAddressEntity();
         testProduct = ProductTestData.createProductEntity();
-        newOrder = OrderTestData.createNewOrderModel();
+        newOrder = OrderTestData.createNewOrderModel(testUser.getId(), testAddress.getId(), testProduct.getId(), testProduct.getPrice());
     }
 
     @Test

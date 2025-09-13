@@ -4,12 +4,11 @@ package org.example.ecommerce.testdata;
 import java.util.Collections;
 import java.util.UUID;
 
-import org.example.ecommerce.entity.AddressEntity;
 import org.example.ecommerce.entity.UserEntity;
 import org.example.ecommerce.model.User;
 
 public class UserTestData {
-    public static final UUID DEFAULT_USER_ID = UUID.fromString("a1b9b31d-e73c-4112-af7c-b68530f38222");
+    public static final UUID DEFAULT_USER_ID = UUID.randomUUID();
     public static final String DEFAULT_USERNAME = "testuser";
     public static final String DEFAULT_EMAIL = "test@example.com";
     public static final String DEFAULT_FIRST_NAME = "Test";
@@ -44,13 +43,5 @@ public class UserTestData {
                 .lastName(DEFAULT_LAST_NAME);
     }
 
-    public static AddressEntity createAddresses(UserEntity user) {
-        AddressEntity address = AddressEntity.builder()
-                .id(UUID.randomUUID())
-                .city("Test City")
-                .state("TS")
-                .country("Test Country")
-                .build();
-        return address;
-    }
+    
 }

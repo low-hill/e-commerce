@@ -6,16 +6,13 @@ import java.util.UUID;
 import org.example.ecommerce.model.Item;
 
 public class ItemTestData {
-    public static final UUID DEFAULT_PRODUCT_ID = ProductTestData.DEFAULT_PRODUCT_ID;
+    public static final UUID DEFAULT_PRODUCT_ID = UUID.randomUUID();
     public static final BigDecimal DEFAULT_PRICE = BigDecimal.valueOf(100);
-    public static final int DEFAULT_COUNT = 10;
+    public static final int DEFAULT_COUNT = 1;
 
-    public static Item createItemModel() {
-        return createItemModel(DEFAULT_PRODUCT_ID, DEFAULT_PRICE, DEFAULT_COUNT);
-    }
 
-    public static Item createItemModel(UUID productId) {
-        return createItemModel(productId, DEFAULT_PRICE, DEFAULT_COUNT);
+    public static Item createItemModel(UUID productId, BigDecimal price) {
+        return createItemModel(productId, price, DEFAULT_COUNT);
     }
 
     public static Item createItemModel(UUID productId, BigDecimal price, int count) {

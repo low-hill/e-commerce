@@ -6,7 +6,7 @@ import java.util.UUID;
 import org.example.ecommerce.entity.ProductEntity;
 
 public class ProductTestData {
-    public static final UUID DEFAULT_PRODUCT_ID = UUID.fromString("6d62d909-f957-430e-8689-b5129c0bb75e");
+    public static final UUID DEFAULT_PRODUCT_ID = UUID.randomUUID();
     public static final String DEFAULT_PRODUCT_NAME = "Test Product";
     public static final String DEFAULT_DESCRIPTION = "Test Product Description";
     public static final BigDecimal DEFAULT_PRICE = BigDecimal.valueOf(100);
