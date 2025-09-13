@@ -1002,8 +1002,8 @@ components:
       properties:
         customerId:
           type: string
-        address:
-          $ref: '#/components/schemas/Address'
+        addressId:
+          type: string
         card:
           $ref: '#/components/schemas/Card'
         items:

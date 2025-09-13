@@ -63,7 +63,7 @@ public class OrderEntity {
     private UserEntity userEntity;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "ADDRESS_ID", referencedColumnName = "ID", insertable=false, updatable=false)
+    @JoinColumn(name = "ADDRESS_ID", referencedColumnName = "ID")
     private AddressEntity addressEntity;
 
     @OneToOne(cascade = CascadeType.ALL )

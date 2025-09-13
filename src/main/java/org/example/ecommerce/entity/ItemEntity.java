@@ -19,6 +19,7 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 import org.example.ecommerce.config.generator.GeneratedUuidV7;
 
@@ -41,9 +42,11 @@ public class ItemEntity {
     @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "ID")
     private ProductEntity product;
 
+    @Setter
     @Column(name = "UNIT_PRICE")
     private BigDecimal unitPrice;
 
+    @Setter
     @Column(name = "QUANTITY")
     private int quantity;
 
